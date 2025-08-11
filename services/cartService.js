@@ -7,6 +7,7 @@ exports.getCart = async(userId) => {
 
 exports.addToCart = async(userId, productId, quantity) => {
     let cart = await Cart.findOne({userId});
+    console.log('product Id : ', productId)
     if(!cart) {
         cart = new Cart({userId, items: [{productId, quantity}]});
     } else{
@@ -24,9 +25,9 @@ exports.addToCart = async(userId, productId, quantity) => {
 }
 
 exports.updateQuantity = async(userId, productId, quantity) => {
-    const cart = await Cart.findOne({userId: req.user.id});
+    const cart = await Cart.findOne({userId});
     if(!cart) throw new Error('장바구니 없음');
-
+    
     const item = cart.items.find(item => item.productId.equals(productId));
     if(!item) throw new Error('아이템 없음');
 
@@ -39,6 +40,8 @@ exports.updateQuantity = async(userId, productId, quantity) => {
 
 exports.removeItem = async(userId, productId) => {
     const cart = await Cart.findOne({userId});
+    console.log('productId: ', productId);
+    console.log('cart : ',cart);
     if(!cart) new Error ('삭제할 항목이 없습니다.');
     
     cart.items = cart.items.filter(item => !item.productId.equals(productId));

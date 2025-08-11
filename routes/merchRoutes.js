@@ -17,3 +17,5 @@ router.put('/:id', authMiddleware, merchController.updateMerch);
 
 // DELETE : 굿즈 삭제
 router.delete('/:id', authMiddleware, merchController.deleteMerch);
+
+module.exports = router;

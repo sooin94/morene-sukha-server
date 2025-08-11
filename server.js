@@ -32,7 +32,7 @@ const showRoutes = require('./routes/showRoutes');
 app.use('/api/shows', showRoutes);
 
 const userRoutes = require('./routes/userRoutes');
-app.use('/api/auth', userRoutes);
+app.use('/api/user', userRoutes);
 
 const authRoutes = require('./routes/authRoutes');
 app.use('/api/auth', authRoutes);
@@ -43,5 +43,14 @@ app.use('/api/cart', cartRoutes);
 const merchRoutes = require('./routes/merchRoutes');
 app.use('./api/merch', merchRoutes);
 
+const merchOrderRoutes = require('./routes/merchOrderRoutes');
+app.use('./api/merchOrder', merchOrderRoutes);
+
+const merchCartRoutes = require('./routes/merchCartRoutes');
+app.use('./api/merchCart', merchCartRoutes);
+
 const bookingRoutes = require('./routes/bookingRoutes');
 app.use('./api/booking', bookingRoutes);
+
+const paymentRoutes = require('./routes/paymentRoutes');
+app.use('./api/pay', paymentRoutes);

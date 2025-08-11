@@ -12,7 +12,7 @@ exports.verifyPayment = async(req, res) => {
         const accessToken = tokenRes.response.access_token;
 
         // 2.결제 정보 조회
-        const { data: paymentData } = await axios.get(`https://api.iamport.kr/payments/${imp_uid}`{
+        const { data: paymentData } = await axios.get(`https://api.iamport.kr/payments/${imp_uid}`,{
            headers: {Authorization: accessToken} 
         });
 

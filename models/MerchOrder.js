@@ -27,7 +27,7 @@ const merchOrderSchema = new mongoose.Schema({
         enum: ['pending', 'paid', 'shipped', 'cancelled'],
         default: 'pending'
     },
-    createdAt: {type, Date, default: Date.now}
+    createdAt: {type: Date, default: Date.now}
 
 });
 

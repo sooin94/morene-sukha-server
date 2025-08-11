@@ -10,13 +10,14 @@ exports.getCart = async(req, res) => {
 }
 exports.addToCart = async(req, res) => {
     try {
-        const cart = await cartService.addToCart(req.user.id, req.params.productId, req.body.quantity);
+        const cart = await cartService.addToCart(req.user.id, req.body.productId, req.body.quantity);
         res.status(200).json({message : '장바구니 저장 완료', cart});
     }catch (err) {
-        res.status(500).json({message : '장바구니 추가 실패'});
+        res.status(500).json({message : err.message});
     }
 }
 exports.updateQuantity = async(req, res) => {
+    console.log("req: ", req.params.productId);
     try {
         const cart = await cartService.updateQuantity(req.user.id, req.params.productId, req.body.quantity);
         res.status(200).json(cart)
@@ -27,7 +28,7 @@ exports.updateQuantity = async(req, res) => {
 exports.removeItem = async(req, res) => {
     try {
         const cart = await cartService.removeItem(req.user.id, req.params.productId);
-        res.status(200).json(cart);
+        res.status(200).json({message : '항목이 삭제되었습니다.', cart});
     }catch (err) {
         res.status(404).json({message : err.message});
     }
