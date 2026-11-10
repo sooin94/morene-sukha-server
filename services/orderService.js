@@ -6,25 +6,29 @@ exports.createOrder = async(userId) => {
     if(!cart || cart.items.length === 0){
         throw new Error('장바구니가 비어있습니다.');
     }
+    const orderUid = `order_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
 
     // 주문 항목 구성
     const orderItems = cart.items.map(items => ({
-        productId : item.productId._id,
-        name: item.productId.name,
-        price: item.productId.price,
-        quantity: item.quantity,
+        productId : items.productId._id,
+        name: items.productId.name,
+        price: items.productId.price,
+        quantity: items.quantity,
     }));
     
     const totalAmount = orderItems.reduce(
         (sum, item) => sum + item.price * item.quantity, 0
     );
-
+    console.log("total Amount : ", totalAmount);
     // 주문 생성
     const newOrder = new Order({
         userId,
+        orderUid,
         items: orderItems,
         totalAmount,
-        status: 'pending',
+        status: "created",
+        isPaid: false,
+        deleted: false,
     });
     await newOrder.save();
 
@@ -32,7 +36,8 @@ exports.createOrder = async(userId) => {
     cart.items = [];
     await cart.save();
 
-    return { message : '주문이 완료되었습니다.', order: newOrder };
+    // 5) 클라에 내려주기 (결제창 열 때 필요)
+    return newOrder;
 };
 
 exports.getMyOrders = async(userId) => {

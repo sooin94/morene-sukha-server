@@ -1,8 +1,22 @@
 const axios = require('axios');
 const MerchOrder = require('../models/MerchOrder');
+const Menu = require('../models/Menu');
+const Order = require('../models/Order');
+const orderService = require('../services/orderService');
+const { v4: uuidv4 } = require("uuid");
+
+// 주문 정보 확인
+exports.checkOrder = async(req, res) => {
+    try {
+        const order = await orderService.createOrder(req.user.id);
+        res.status(200).json({message : '주문 생성 완료', order});
+    }catch (err) {
+        res.status(500).json({message : err.message});
+    }
+
+}
 
 exports.verifyPayment = async(req, res) => {
-    const { imp_uid, merchant_uid } = req.body;
     try{
         // 1.아임포트 토큰 발급
         const { data: tokenRes } = await axios.post('https://api.iamport.kr/users/getToken', {

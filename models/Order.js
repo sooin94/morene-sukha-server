@@ -9,13 +9,15 @@ const orderItemSchema = new mongoose.Schema({
 })
 const orderSchema = new mongoose.Schema({
     userId: {type: mongoose.Schema.Types.ObjectId, ref:'User', require: true},
+    orderUid: { type: String, required: true, unique: true },
     items: [orderItemSchema],
     totalAmount: Number,
     status:{ 
         type: String, 
-        enum: ['pending','confirmed','processing','completed','cancelled'],
-        default : 'pending'
+        enum: [,'created','pending','confirmed','processing','completed','cancelled'],
+        default : 'created'
     },
+    isPaid: {type: Boolean, defaul: false},
     createAt: { type: Date, default: Date.now },
     deleted: {type: Boolean, defaul: false},
 });

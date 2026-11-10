@@ -53,4 +53,7 @@ const bookingRoutes = require('./routes/bookingRoutes');
 app.use('./api/booking', bookingRoutes);
 
 const paymentRoutes = require('./routes/paymentRoutes');
-app.use('./api/pay', paymentRoutes);
+app.use('/api/pay', paymentRoutes);
+
+const pushRoutes = require('./routes/pushRoutes');
+app.use('/api/push', pushRoutes);
